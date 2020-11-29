@@ -24,10 +24,8 @@ open Instr
 
 /-- execute a list of instructions on a stack -/
 @[simp] def exec : list Instr -> list ℕ -> list ℕ
-| ((PUSH n) :: rest) s :=
-  exec rest (n :: s)
-| (ADD :: rest) (a :: b :: s) :=
-  exec rest ((a + b) :: s)
+| ((PUSH n) :: rest) s := exec rest (n :: s)
+| (ADD :: rest) (a :: b :: s) := exec rest ((a + b) :: s)
 | _ s := s
 
 /-- compile an expression to an instruction list -/
