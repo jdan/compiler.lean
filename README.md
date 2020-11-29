@@ -14,13 +14,11 @@ inductive instr
 | add : instr
 ```
 
-Our main theorem:
+### `theorem eval_eq_exec_compile : ∀ e, exec (compile e) [] = [eval e]`
 
-```
-theorem eval_eq_exec_compile : ∀ e, exec (compile e) [] = [eval e]
-```
+[Source](/src/compiler.lean)
 
-states "all expressions `e` when compiled and executed on an empty stack produce the same value as `eval`"
+All expressions `e` when compiled and executed on an empty stack produce the same value as `eval`.
 
 I'm still new to lean so my proofs aren't great. Suggestions welcome!
 
