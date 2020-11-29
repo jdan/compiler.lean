@@ -16,7 +16,7 @@ inductive instr
 
 ### `theorem eval_eq_exec_compile : ∀ e, exec (compile e) [] = [eval e]`
 
-[Source](/src/compiler.lean)
+[[Source]](/src/compiler.lean)
 
 All expressions `e` when compiled and executed on an empty stack produce the same value as `eval`.
 
