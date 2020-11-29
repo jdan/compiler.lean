@@ -34,10 +34,9 @@ inductive instr
 | (expr.add a b) := compile a ++ compile b ++ [instr.add]
 
 /-- compiled expressions only add to the stack when `exec`d -/
-lemma exec_compile_concat : ∀ e instrs stack,
+@[simp] lemma exec_compile_concat (e : expr) : ∀ instrs stack,
   exec (compile e ++ instrs) stack = exec instrs (eval e :: stack) :=
 begin
-  intro e,
   induction e with n a b iha ihb,
   { intros,
     simp,
@@ -48,11 +47,7 @@ begin
 end
 
 /-- exec (compile e) = eval e -/
-theorem eval_eq_exec_compile : ∀ e,
-  exec (compile e) [] = [eval e] :=
-begin
-  intros,
-  simpa using exec_compile_concat e [] [],
-end
+theorem eval_eq_exec_compile (e : expr) : exec (compile e) [] = [eval e] :=
+by simpa using exec_compile_concat e [] []
 
 end compiler
