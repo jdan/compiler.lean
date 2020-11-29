@@ -24,7 +24,7 @@ I'm still new to lean so my proofs aren't great. Suggestions welcome!
 
 ### `eval : Expr -> ℕ`
 
-Evaluates an `expr` to produce a natural number
+Evaluates an `Expr` to produce a natural number
 
 ```
 eval (Val 5)
@@ -36,7 +36,7 @@ eval (Add (Add (Val 10) (Val 20))
 
 ### `compile : Expr -> list Instr`
 
-Compiles an `expr` to produce a list of instructions
+Compiles an `Expr` to produce a list of instructions
 
 ```
 compile (Val 42)
