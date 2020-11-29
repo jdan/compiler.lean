@@ -5,16 +5,16 @@ Inspired by the wonderful [Program Correctness](https://www.youtube.com/watch?v=
 We define an expression type for our language and an instruction type for the stack machine which our compiler targets.
 
 ```
-inductive expr
-| val : ℕ -> expr
-| add : expr -> expr -> expr
+inductive Expr
+| Val : ℕ -> Expr
+| Add : Expr -> Expr -> Expr
 
-inductive instr
-| push : ℕ -> instr
-| add : instr
+inductive Instr
+| PUSH : ℕ -> Instr
+| ADD : Instr
 ```
 
-### `theorem eval_eq_exec_compile : ∀ e, exec (compile e) [] = [eval e]`
+### `eval_eq_exec_compile (e : Expr) : exec (compile e) [] = [eval e]`
 
 [[Source]](/src/compiler.lean)
 
@@ -22,37 +22,37 @@ All expressions `e` when compiled and executed on an empty stack produce the sam
 
 I'm still new to lean so my proofs aren't great. Suggestions welcome!
 
-### `eval : expr -> ℕ`
+### `eval : Expr -> ℕ`
 
 Evaluates an `expr` to produce a natural number
 
 ```
-eval (expr.val 5)
+eval (Val 5)
 => 5
-eval (expr.add (expr.add (expr.val 10) (expr.val 20))
-               (expr.val 30))
+eval (Add (Add (Val 10) (Val 20))
+          (Val 30))
 => 60
 ```
 
-### `compile : expr -> list instr`
+### `compile : Expr -> list Instr`
 
 Compiles an `expr` to produce a list of instructions
 
 ```
-compile (expr.val 42)
-=> [instr.push 42]
-compile (expr.add (expr.add (expr.val 10) (expr.val 20))
-                  (expr.val 30))
-=> [instr.push 10, instr.push 20, instr.add, instr.push 30, instr.add]
+compile (Val 42)
+=> [PUSH 42]
+compile (Add (Add (Val 10) (Val 20))
+             (Val 30))
+=> [PUSH 10, PUSH 20, ADD, PUSH 30, ADD]
 ```
 
-### `exec : list instr -> list ℕ -> list ℕ`
+### `exec : list Instr -> list ℕ -> list ℕ`
 
 Executes a list of instructions on a stack
 
 ```
-exec [instr.push 42] []
+exec [PUSH 42] []
 => [42]
-exec [instr.push 10, instr.push 20, instr.add, instr.push 30, instr.add] []
+exec [PUSH 10, PUSH 20, ADD, PUSH 30, ADD][]
 => [60]
 ```
