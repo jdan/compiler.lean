@@ -14,7 +14,7 @@ inductive Instr
 | ADD : Instr
 ```
 
-### `eval_eq_exec_compile (e : Expr) : exec (compile e) [] = [eval e]`
+### `exec_compile_eq_eval (e : Expr) : exec (compile e) [] = [eval e]`
 
 [[Source]](/src/compiler.lean)
 

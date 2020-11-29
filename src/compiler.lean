@@ -49,7 +49,7 @@ begin
 end
 
 /-- exec (compile e) = eval e -/
-theorem eval_eq_exec_compile (e : Expr) : exec (compile e) [] = [eval e] :=
+theorem exec_compile_eq_eval (e : Expr) : exec (compile e) [] = [eval e] :=
 by simpa using exec_compile_concat e [] []
 
 end compiler
