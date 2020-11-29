@@ -33,7 +33,7 @@ def compile : expr -> list instr
 | (expr.val n) := [instr.push n]
 | (expr.add a b) := compile a ++ compile b ++ [instr.add]
 
-/- compiled expressions only add to the stack which `exec`d -/
+/- compiled expressions only add to the stack when `exec`d -/
 lemma exec_compile_concat : ∀ e instrs stack,
   exec (compile e ++ instrs) stack = exec instrs (eval e :: stack) :=
 begin
