@@ -13,8 +13,8 @@ def eval : expr -> ℕ
 | (expr.add a b) := eval a + eval b
 
 /-
-we'll compile our expressions to stack machine built
-from push and add instructions
+  we'll compile our expressions to instructions of a stack machine
+  which supports push and add operations
 -/
 inductive instr
 | push : ℕ -> instr
@@ -33,9 +33,9 @@ def compile : expr -> list instr
 | (expr.val n) := [instr.push n]
 | (expr.add a b) := compile a ++ compile b ++ [instr.add]
 
-lemma exec_compile_concat :
-  ∀ (e : expr) (instrs : list instr) (stack : list ℕ),
-    exec (compile e ++ instrs) stack = exec instrs (eval e :: stack) :=
+/- compiled expressions only add to the stack which `exec`d -/
+lemma exec_compile_concat : ∀ e instrs stack,
+  exec (compile e ++ instrs) stack = exec instrs (eval e :: stack) :=
 begin
   intro e,
   induction e with n a b iha ihb,
@@ -53,8 +53,9 @@ begin
   }
 end
 
-theorem eval_eq_exec_compile :
-  ∀ e : expr, exec (compile e) [] = [eval e] :=
+/- exec (compile e) = eval e -/
+theorem eval_eq_exec_compile : ∀ e,
+  exec (compile e) [] = [eval e] :=
 begin
   intros,
   have H := exec_compile_concat e [] [],
