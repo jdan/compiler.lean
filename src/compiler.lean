@@ -38,10 +38,12 @@ open Instr
   exec (compile e ++ instrs) stack = exec instrs (eval e :: stack) :=
 begin
   induction e with n a b iha ihb,
-  case Val { intros,
+  case Val {
+    intros,
     simp,
   },
-  case Add { intros,
+  case Add {
+    intros,
     simp [iha, ihb, add_comm],
   }
 end
